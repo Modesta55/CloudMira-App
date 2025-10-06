@@ -1,35 +1,99 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"><title>Gallery - CloudMira</title><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="assets/css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery - CloudMira</title>
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+  <!-- HEADER -->
   <header class="header">
     <div class="inner container-max">
       <div class="brand"><h1>CloudMira</h1></div>
       <nav class="navlinks">
-        <a href="index.html">Home</a><a href="gallery.html" class="active">Gallery</a><a href="projects.html">Projects</a><a href="videos.html">Videos</a><a href="register.html">Register</a><a href="contact.html">Contact</a>
+        <a href="index.html">Home</a>
+        <a href="gallery.html" class="active">Gallery</a>
+        <a href="projects.html">Projects</a>
+        <a href="videos.html">Videos</a>
+        <a href="register.html">Register</a>
+        <a href="contact.html">Contact</a>
       </nav>
-      <button id="hamburgerBtn" class="hamburger">☰</button>
+      <button id="hamburgerBtn" class="hamburger" onclick="toggleMenu()">☰</button>
     </div>
-    <div id="mobileMenu" class="mobile-menu" style="display:none"></div>
+
+    <div id="mobileMenu" class="mobile-menu">
+      <a href="index.html">Home</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="projects.html">Projects</a>
+      <a href="videos.html">Videos</a>
+      <a href="register.html">Register</a>
+      <a href="contact.html">Contact</a>
+    </div>
   </header>
 
+  <!-- MAIN -->
   <main class="container" style="margin-top:84px">
+
+    <!-- Hospital App Deployment Section -->
     <section class="card">
-      <h2 style="color:var(--accent-1);">🎨 Graphic Design Samples</h2>
-      <div class="gallery" id="galleryDesigns">
-        <img src="https://i.imgur.com/ycAH1vA.png" alt="">
-        <img src="https://i.imgur.com/hdZmkOx.jpeg" alt="">
-        <img src="https://i.imgur.com/JIzJrUU.png" alt="">
-        <!-- extra tech images -->
-        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=60" alt="">
-        <img src="https://images.unsplash.com/photo-1526378727112-2ee6f7f7c2da?auto=format&fit=crop&w=800&q=60" alt="">
+      <h3 style="color:var(--accent-1); margin-top:18px">🏥 Hospital App Deployment</h3>
+      <div class="gallery" id="galleryHospital">
+        <img src="https://i.imgur.com/Amrg8su.png" alt="Hospital App 1">
+        <img src="https://i.imgur.com/1JG2N0n.png" alt="Hospital App 2">
+        <img src="https://i.imgur.com/uHzYkcq.png" alt="Hospital App 3">
+        <img src="https://i.imgur.com/2Vy4Crt.png" alt="Hospital App 4">
+        <img src="https://i.imgur.com/r3sOes8.png" alt="Hospital App 5">
+        <img src="https://i.imgur.com/CbllCgY.png" alt="Hospital App 6">
+        <img src="https://i.imgur.com/n9HQtYr.png" alt="Hospital App 7">
+        <img src="https://i.imgur.com/qb7QO0V.png" alt="Hospital App 8">
+        <img src="https://i.imgur.com/rHRjAmh.png" alt="Hospital App 9">
+        <img src="https://i.imgur.com/FLkgHlL.png" alt="Hospital App 10">
+        <img src="https://i.imgur.com/QtPR7Zm.png" alt="Hospital App 11">
+        <img src="https://i.imgur.com/aqJck94.png" alt="Hospital App 12">
+        <img src="https://i.imgur.com/PbkAg1U.png" alt="Hospital App 13">
+        <img src="https://i.imgur.com/PsBUtnv.png" alt="Hospital App 14">
       </div>
     </section>
+
+    <!-- Graphic Design Samples Section -->
+    <section class="card">
+      <h3 style="color:var(--accent-1); margin-top:22px">🎨 Graphic Design Samples</h3>
+      <div class="gallery" id="galleryDesigns">
+        <img src="https://i.imgur.com/ycAH1vA.png" alt="Graphic Design 1">
+        <img src="https://i.imgur.com/hdZmkOx.jpeg" alt="Graphic Design 2">
+        <img src="https://i.imgur.com/JIzJrUU.png" alt="Graphic Design 3">
+      </div>
+    </section>
+
+    <!-- Tech & Community Images Section -->
+    <section class="card">
+      <h3 style="color:var(--accent-1); margin-top:22px">💻 Tech & Community Highlights</h3>
+      <div class="gallery" id="galleryTech">
+        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=60" alt="Cloud Servers">
+        <img src="https://images.unsplash.com/photo-1526378727112-2ee6f7f7c2da?auto=format&fit=crop&w=800&q=60" alt="Coding Workspace">
+        <img src="https://images.unsplash.com/photo-1581090700227-6c7f3e32a9eb?auto=format&fit=crop&w=800&q=60" alt="Tech Team Collaboration">
+        <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=60" alt="Cloud Infrastructure">
+        <img src="https://images.unsplash.com/photo-1581091012184-dc9c7b6f41f7?auto=format&fit=crop&w=800&q=60" alt="Server Room">
+        <img src="https://images.unsplash.com/photo-1581093588401-191e3b5b4c8f?auto=format&fit=crop&w=800&q=60" alt="DevOps Automation">
+        <img src="https://images.unsplash.com/photo-1581091012184-5e12d07d29eb?auto=format&fit=crop&w=800&q=60" alt="Software Development">
+        <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981f?auto=format&fit=crop&w=800&q=60" alt="Cloud Security Team">
+      </div>
+    </section>
+
   </main>
 
-  <footer class="site-footer"><div class="container muted">© 2025 CloudMira Tech Academy</div></footer>
-  <script src="assets/js/main.js"></script>
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container muted">© 2025 CloudMira Tech Academy</div>
+  </footer>
+
+  <script>
+    // Mobile Menu toggle
+    function toggleMenu() {
+      const menu = document.getElementById("mobileMenu");
+      menu.style.display = menu.style.display === "block" ? "none" : "block";
+    }
+  </script>
 </body>
 </html>
