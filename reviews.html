@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Reviews - CloudMira</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="inner">
+      <div class="brand"><h1>CloudMira Tech</h1></div>
+      <div class="navlinks">
+        <a href="index.html">Home</a>
+        <a href="courses.html">Programs</a>
+        <a href="reviews.html" class="active">Reviews</a>
+        <a href="register.html">Register</a>
+      </div>
+      <button id="hamburgerBtn" class="hamburger">☰</button>
+    </div>
+    <div id="mobileMenu" class="mobile-menu" style="display:none">
+      <a href="index.html">Home</a><br><a href="courses.html">Programs</a><br><a href="reviews.html">Reviews</a><br><a href="register.html">Register</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Student Reviews</h2>
+      <div id="reviewsList" style="margin-top:12px"></div>
+    </section>
+
+    <section class="card" style="margin-top:16px">
+      <h3>Leave a Review</h3>
+      <form id="rev_form">
+        <label>Your name</label>
+        <input id="rev_name">
+        <label>Email</label>
+        <input id="rev_email" type="email">
+        <label>Phone</label>
+        <input id="rev_phone" type="tel">
+        <label>Review</label>
+        <textarea id="rev_text"></textarea>
+        <div style="margin-top:10px">
+          <button type="button" class="btn" onclick="submitReviewForm()">Submit Review</button>
+        </div>
+        <div id="rev_status" class="small muted" style="margin-top:10px"></div>
+      </form>
+    </section>
+  </main>
+
+  <footer><div class="container muted">© 2025 CloudMira Tech Academy</div></footer>
+  <script src="assets/js/main.js"></script>
+  <script>
+    // load reviews when page opens
+    document.addEventListener('DOMContentLoaded', function(){ loadReviews('reviewsList', 12); });
+  </script>
+</body>
+</html>

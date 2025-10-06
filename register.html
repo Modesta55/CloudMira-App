@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Register - CloudMira Tech Academy</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="inner">
+      <div class="brand"><h1>CloudMira Tech</h1></div>
+      <div class="navlinks">
+        <a href="index.html">Home</a>
+        <a href="courses.html">Programs</a>
+        <a href="reviews.html">Reviews</a>
+        <a href="register.html" class="active">Register</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <button id="hamburgerBtn" class="hamburger">☰</button>
+    </div>
+
+    <div id="mobileMenu" class="mobile-menu" style="display:none">
+      <a href="index.html">Home</a><br>
+      <a href="courses.html">Programs</a><br>
+      <a href="reviews.html">Reviews</a><br>
+      <a href="register.html">Register</a><br>
+      <a href="contact.html">Contact</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Register for a Cohort</h2>
+      <form id="registerForm">
+        <label>Full Name</label>
+        <input id="r_name" required>
+
+        <label>Email</label>
+        <input id="r_email" type="email" required>
+
+        <label>Phone</label>
+        <input id="r_phone" type="tel" required>
+
+        <label>
+          <input id="r_whatsapp" type="checkbox">
+          I want to join the WhatsApp group after registration
+        </label>
+
+        <label>Notes (optional)</label>
+        <textarea id="r_notes"></textarea>
+
+        <div style="margin-top:12px">
+          <button type="button" class="btn" onclick="submitRegistration()">Submit & Join</button>
+        </div>
+
+        <div id="reg_status" class="small muted" style="margin-top:12px"></div>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container muted">© 2025 CloudMira Tech Academy</div>
+  </footer>
+
+  <script>
+    // 🧩 Backend URL (replace with your own Google Apps Script Web App link)
+    const API_URL = "https://script.google.com/macros/s/AKfycby5KRdn65YNClClscrnzfAEzs7lZXaGV5DeaE08iXmfwBJvOcsChTsXXGIEjeVQIFeQ/exec";
+
+    function submitRegistration() {
+      const name = document.getElementById("r_name").value.trim();
+      const email = document.getElementById("r_email").value.trim();
+      const phone = document.getElementById("r_phone").value.trim();
+      const notes = document.getElementById("r_notes").value.trim();
+      const joinWhatsApp = document.getElementById("r_whatsapp").checked;
+      const status = document.getElementById("reg_status");
+
+      if (!name || !email || !phone) {
+        status.innerText = "⚠️ Please fill all required fields.";
+        return;
+      }
+
+      status.innerText = "⏳ Submitting...";
+
+      fetch(API_URL, {
+        method: "POST",
+        body: JSON.stringify({
+          type: "register",
+          data: { name, email, phone, notes }
+        }),
+        headers: { "Content-Type": "application/json" }
+      })
+        .then(res => res.text())
+        .then(() => {
+          status.innerText = "✅ Registration successful! Redirecting...";
+
+          // ✅ If the user ticked "Join WhatsApp", open WhatsApp first
+          if (joinWhatsApp) {
+            window.open("https://chat.whatsapp.com/GMJ6GRVzIR7JaIszZWMND3?mode=ems_copy_t", "_blank");
+          }
+
+          // ✅ Redirect to success page after 2 seconds
+          setTimeout(() => {
+            window.location.href = "success.html";
+          }, 2000);
+        })
+        .catch(() => {
+          status.innerText = "❌ Something went wrong. Please try again.";
+        });
+    }
+  </script>
+</body>
+</html>
