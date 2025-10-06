@@ -1,69 +1,160 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Programs - CloudMira Tech Academy</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="assets/css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Courses | CloudMira</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      background: linear-gradient(135deg, #1b1b3a, #2d007a, #4e0aff);
+      color: #f2f2f2;
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header h1 {
+      color: #9f9cff;
+      font-size: 1.4rem;
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      color: #f2f2f2;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #a27bff;
+    }
+
+    .courses-section {
+      padding: 60px 10%;
+      text-align: center;
+    }
+
+    .courses-section h2 {
+      font-size: 2.3rem;
+      color: #a27bff;
+      margin-bottom: 15px;
+    }
+
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      margin-top: 40px;
+    }
+
+    .course-card {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.2);
+      padding: 25px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .course-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
+    }
+
+    .course-card iframe {
+      border-radius: 12px;
+      width: 100%;
+      height: 180px;
+    }
+
+    .course-card h3 {
+      margin-top: 15px;
+      color: #b69eff;
+      font-size: 1.2rem;
+    }
+
+    .course-card p {
+      font-size: 0.95rem;
+      color: #d7d7e0;
+      line-height: 1.6;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 10%;
+      background: rgba(255, 255, 255, 0.05);
+      color: #d4d4f8;
+      margin-top: 60px;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <header class="header">
-    <div class="inner">
-      <div class="brand"><h1>CloudMira Tech</h1></div>
-      <div class="navlinks">
-        <a href="index.html">Home</a>
-        <a href="courses.html" class="active">Programs</a>
-        <a href="projects.html">Projects</a>
-        <a href="reviews.html">Reviews</a>
-        <a href="register.html">Register</a>
-        <a href="contact.html">Contact</a>
-      </div>
-      <button id="hamburgerBtn" class="hamburger">☰</button>
-    </div>
-    <div id="mobileMenu" class="mobile-menu" style="display:none">
-      <a href="index.html">Home</a><br>
-      <a href="courses.html">Programs</a><br>
-      <a href="projects.html">Projects</a><br>
-      <a href="reviews.html">Reviews</a><br>
-      <a href="register.html">Register</a><br>
+  <header>
+    <h1>CloudMira Courses</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="courses.html" style="color:#a27bff;">Courses</a>
+      <a href="projects.html">Projects</a>
       <a href="contact.html">Contact</a>
-    </div>
+    </nav>
   </header>
 
-  <main class="container">
-    <section class="card" style="margin-top:84px">
-      <h2>Courses & Programs</h2>
-      <p class="muted">Our learning paths are designed for beginners, career switchers, and professionals looking to upgrade their cloud and DevOps skills.</p>
-      <div class="grid">
-        <div class="course">
-          <h3>Cloud Fundamentals</h3>
-          <p>Learn compute, storage, and networking concepts using AWS, Azure, and Google Cloud.</p>
-        </div>
-        <div class="course">
-          <h3>DevOps Essentials</h3>
-          <p>Hands-on with CI/CD, Docker, GitHub Actions, Terraform, and Kubernetes fundamentals.</p>
-        </div>
-        <div class="course">
-          <h3>IT Support & Tools</h3>
-          <p>Master helpdesk systems, remote tools, and automation for virtual assistants and tech support.</p>
-        </div>
-        <div class="course">
-          <h3>Cloud Security Basics</h3>
-          <p>Identity management, Key Vaults, secrets rotation, and monitoring for safer deployments.</p>
-        </div>
-      </div>
-    </section>
+  <section class="courses-section">
+    <h2>🎓 Learn Modern Tech Skills</h2>
+    <p>Explore beginner-friendly courses in Cloud Computing, DevOps, Automation, and Cybersecurity. Watch, learn, and grow your career!</p>
 
-    <section class="card">
-      <h3>Bonus Tracks</h3>
-      <div class="grid">
-        <div class="course"><h4>No-Code Automation</h4><p>Learn tools like Zapier, Make, Airtable, and Apps Script.</p></div>
-        <div class="course"><h4>Portfolio Building</h4><p>Deploy real projects, create documentation, and host your work online.</p></div>
+    <div class="course-grid">
+      <div class="course-card">
+        <iframe src="https://www.youtube.com/embed/Oy5H3m2YQb0" title="Intro to DevOps"></iframe>
+        <h3>Intro to DevOps</h3>
+        <p>Learn how DevOps bridges the gap between software development and IT operations to deliver applications faster and more reliably.</p>
       </div>
-    </section>
-  </main>
 
-  <footer><div class="container muted">© 2025 CloudMira Tech Academy</div></footer>
-  <script src="assets/js/main.js"></script>
+      <div class="course-card">
+        <iframe src="https://www.youtube.com/embed/FaILnmUYS-U" title="Cloud Computing for Beginners"></iframe>
+        <h3>Cloud Computing for Beginners</h3>
+        <p>Understand the basics of cloud infrastructure, providers like AWS, Azure, and GCP, and how modern systems run globally.</p>
+      </div>
+
+      <div class="course-card">
+        <iframe src="https://www.youtube.com/embed/oxx564hMBUI" title="Intro to CI/CD Pipelines"></iframe>
+        <h3>CI/CD Pipelines</h3>
+        <p>Get hands-on with Continuous Integration and Continuous Deployment workflows used by modern engineering teams.</p>
+      </div>
+
+      <div class="course-card">
+        <iframe src="https://www.youtube.com/embed/1kaP39KXzJw" title="Automation Basics"></iframe>
+        <h3>No-Code & Automation Basics</h3>
+        <p>Discover tools like Zapier, Make, and Google Apps Script for automating repetitive business and technical tasks.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 CloudMira | Designed by Modesta 💻✨
+  </footer>
 </body>
 </html>

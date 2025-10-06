@@ -1,57 +1,26 @@
 <!doctype html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Contact - CloudMira Tech Academy</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="assets/css/style.css">
-</head>
+<html lang="en">
+<head><meta charset="utf-8"><title>Contact - CloudMira</title><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="assets/css/style.css"></head>
 <body>
-  <header class="header">
-    <div class="inner">
-      <div class="brand"><h1>CloudMira Tech</h1></div>
-      <div class="navlinks">
-        <a href="index.html">Home</a>
-        <a href="courses.html">Programs</a>
-        <a href="projects.html">Projects</a>
-        <a href="reviews.html">Reviews</a>
-        <a href="register.html">Register</a>
-        <a href="contact.html" class="active">Contact</a>
-      </div>
-      <button id="hamburgerBtn" class="hamburger">☰</button>
-    </div>
-    <div id="mobileMenu" class="mobile-menu" style="display:none">
-      <a href="index.html">Home</a><br>
-      <a href="courses.html">Programs</a><br>
-      <a href="projects.html">Projects</a><br>
-      <a href="reviews.html">Reviews</a><br>
-      <a href="register.html">Register</a><br>
-      <a href="contact.html">Contact</a>
-    </div>
-  </header>
+  <header class="header"><div class="inner container-max"><div class="brand"><h1>CloudMira</h1></div><nav class="navlinks"><a href="index.html">Home</a><a href="courses.html">Programs</a><a href="projects.html">Projects</a><a href="reviews.html">Reviews</a><a href="register.html">Register</a><a href="contact.html" class="active">Contact</a></nav><button id="hamburgerBtn" class="hamburger">☰</button></div><div id="mobileMenu" class="mobile-menu" style="display:none"></div></header>
 
-  <main class="container">
-    <section class="card" style="margin-top:84px">
+  <main class="container" style="margin-top:84px">
+    <section class="card">
       <h2>Contact & Connect</h2>
-      <p class="muted">Have a question or want to collaborate? Get in touch using the details below or send us a message.</p>
-
       <div class="grid" style="align-items:flex-start">
         <div>
           <p>📧 <a href="mailto:uchechimodesta97@gmail.com">uchechimodesta97@gmail.com</a></p>
           <p>🌐 <a href="https://uchechimodesta.site" target="_blank">uchechimodesta.site</a></p>
           <p>🔗 <a href="https://www.linkedin.com/in/modesta55" target="_blank">LinkedIn</a></p>
-          <p>💬 <a href="WHATSAPP_INVITE_LINK" target="_blank">Join our WhatsApp Group</a></p>
+          <p>💬 <a id="whatsappLink" href="#" target="_blank">Join our WhatsApp Group</a></p>
         </div>
 
         <div>
           <form id="contactForm">
-            <label>Your Name</label>
-            <input id="c_name">
-            <label>Email</label>
-            <input id="c_email" type="email">
-            <label>Message</label>
-            <textarea id="c_msg"></textarea>
-            <button type="button" class="btn" onclick="contactUs()">Send Message</button>
+            <label>Your Name</label><input name="name" id="c_name">
+            <label>Email</label><input name="email" id="c_email" type="email">
+            <label>Message</label><textarea name="message" id="c_msg"></textarea>
+            <div style="margin-top:12px"><button type="submit" class="btn">Send Message</button></div>
             <p id="c_status" class="small muted" style="margin-top:10px"></p>
           </form>
         </div>
@@ -59,7 +28,7 @@
     </section>
   </main>
 
-  <footer><div class="container muted">© 2025 CloudMira Tech Academy</div></footer>
+  <footer class="site-footer"><div class="container muted">© 2025 CloudMira Tech Academy</div></footer>
   <script src="assets/js/main.js"></script>
 </body>
 </html>

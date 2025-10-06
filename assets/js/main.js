@@ -1,22 +1,73 @@
-/* main.js - handles menu, forms and API calls */
+/* assets/js/main.js - CloudMira front-end logic
+   API_URL set to your deployed Apps Script exec URL (you already deployed).
+*/
 
-// === CONFIG: REPLACE THESE two with your values ===
-const API_URL = "https://script.google.com/macros/s/AKfycby5KRdn65YNClClscrnzfAEzs7lZXaGV5DeaE08iXmfwBJvOcsChTsXXGIEjeVQIFeQ/exec"; // e.g. https://script.google.com/macros/s/AKfy.../exec
-const WHATSAPP_INVITE = "https://chat.whatsapp.com/GMJ6GRVzIR7JaIszZWMND3?mode=ems_copy_t"; // e.g. https://chat.whatsapp.com/XXXXXXXX or https://wa.me/234XXXXXXXX
+const API_URL = "https://script.google.com/macros/s/AKfycbyuW9xSq-EHjrJFWi8rjYgPLyXqM-Zkm6O4FnzjEoZtnysGswCN0qfP6VR-KbhtQTWB/exec";
+const WHATSAPP_INVITE = "https://chat.whatsapp.com/GMJ6GRVzIR7JaIszZWMND3?mode=ems_copy_t";
 
-// mobile menu toggle
-document.addEventListener('DOMContentLoaded', function(){
+// DOM ready
+document.addEventListener('DOMContentLoaded', ()=> {
+  // mobile menu toggle
   const toggle = document.getElementById('hamburgerBtn');
-  if(toggle){
-    toggle.addEventListener('click', ()=>{
-      const mm = document.getElementById('mobileMenu');
-      if(mm.style.display === 'block') mm.style.display = 'none'; else mm.style.display = 'block';
+  const mobile = document.getElementById('mobileMenu');
+  if(toggle && mobile){
+    toggle.addEventListener('click', ()=> {
+      mobile.style.display = (mobile.style.display === 'block') ? 'none' : 'block';
+    });
+  }
+
+  // set WhatsApp anchors
+  const waAnchor = document.getElementById('whatsappLink');
+  if(waAnchor) waAnchor.href = WHATSAPP_INVITE;
+  const successJoin = document.getElementById('successJoin');
+  if(successJoin) successJoin.href = WHATSAPP_INVITE;
+  const joinBtn = document.getElementById('joinWhatsappBtn');
+  if(joinBtn) { joinBtn.href = WHATSAPP_INVITE; joinBtn.style.display = 'none'; }
+
+  // dark mode persisted
+  const toggleBtn = document.getElementById('darkModeToggle');
+  if(toggleBtn){
+    if(localStorage.getItem('cm_dark') === '1'){
+      document.body.classList.add('dark-mode');
+      toggleBtn.textContent = '☀️';
+    } else {
+      toggleBtn.textContent = '🌙';
+    }
+    toggleBtn.addEventListener('click', ()=> {
+      document.body.classList.toggle('dark-mode');
+      const isDark = document.body.classList.contains('dark-mode');
+      localStorage.setItem('cm_dark', isDark ? '1' : '0');
+      toggleBtn.textContent = isDark ? '☀️' : '🌙';
+    });
+  }
+
+  // wire contact form (global contact form id = contactForm)
+  const contactForm = document.getElementById('contactForm');
+  if(contactForm){
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = (contactForm.querySelector('[name="name"]')||{}).value || '';
+      const email = (contactForm.querySelector('[name="email"]')||{}).value || '';
+      const msg = (contactForm.querySelector('[name="message"]')||{}).value || '';
+      const statusEl = document.getElementById('c_status');
+      if(!name || !email || !msg){ if(statusEl) statusEl.innerText='⚠️ Please fill all fields.'; return; }
+      if(statusEl) statusEl.innerText='⏳ Sending...';
+      const resp = await postAPI('contact', { name, email, msg });
+      if(resp && (resp.status==='ok' || resp.status==='success')) {
+        if(statusEl) statusEl.innerText='✅ Message sent!'; contactForm.reset();
+      } else {
+        if(statusEl) statusEl.innerText='❌ '+(resp?.message||'Failed to send');
+      }
     });
   }
 });
 
-// helper - post JSON to Apps Script
+// helper: POST JSON to API
 async function postAPI(action, data){
+  if(!API_URL || API_URL.indexOf('script.google.com') === -1){
+    console.warn('API_URL not set correctly in main.js');
+    return { status:'error', message:'API not configured' };
+  }
   try {
     const res = await fetch(API_URL, {
       method: 'POST',
@@ -31,108 +82,79 @@ async function postAPI(action, data){
   }
 }
 
-// Registration form submit handler (on register.html)
-async function submitRegistration(formId, statusId){
+// Registration
+async function submitRegistration(formId='registerForm', statusId='reg_status'){
   const form = document.getElementById(formId);
   const status = document.getElementById(statusId);
-  const name = form.querySelector('#r_name').value.trim();
-  const email = form.querySelector('#r_email').value.trim();
-  const phone = form.querySelector('#r_phone').value.trim();
-  if(!name || !email) { status.innerText = 'Please enter name and email.'; return; }
-  status.innerText = 'Submitting...';
-  const payload = { name:name, email:email, phone:phone, whatsapp: form.querySelector('#r_whatsapp').checked ? 'Yes' : 'No', notes: form.querySelector('#r_notes').value.trim() };
+  if(!form || !status) return;
+  const name = (document.getElementById('r_name')||{}).value.trim();
+  const email = (document.getElementById('r_email')||{}).value.trim();
+  const phone = (document.getElementById('r_phone')||{}).value.trim();
+  const notes = (document.getElementById('r_notes')||{}).value.trim();
+  const joinWhatsApp = (document.getElementById('r_whatsapp')||{}).checked || false;
+
+  if(!name || !email || !phone){
+    status.innerText = '⚠️ Please fill all required fields.';
+    return;
+  }
+  status.innerText = '⏳ Submitting...';
+  const payload = { name, email, phone, whatsapp: joinWhatsApp ? 'Yes' : 'No', notes };
   const resp = await postAPI('register', payload);
-  if(resp && resp.status === 'ok'){
-    status.innerText = 'Registration saved. Click to join WhatsApp group.';
-    // show join button
+  if(resp && (resp.status === 'ok' || resp.status === 'success')){
+    status.innerText = '✅ Registration saved. You may join the WhatsApp group.';
     const joinBtn = document.getElementById('joinWhatsappBtn');
     if(joinBtn) joinBtn.style.display = 'inline-block';
     form.reset();
+    setTimeout(()=> window.location.href = 'success.html', 900);
   } else {
-    status.innerText = 'Error: ' + (resp.message || 'Could not register');
+    status.innerText = '❌ ' + (resp.message || 'Could not register');
   }
 }
 
-// Reviews page: fetch recent reviews and render
-async function loadReviews(containerId, limit=10){
+// Reviews: load and submit
+async function loadReviews(containerId='reviewsList', limit=10){
   const container = document.getElementById(containerId);
   if(!container) return;
-  container.innerHTML = 'Loading...';
-  const resp = await postAPI('getReviews', {limit: limit});
-  if(!resp || resp.status !== 'ok'){ container.innerHTML = '<div class="muted">Unable to load reviews.</div>'; return; }
-  const reviews = resp.reviews || [];
+  container.innerHTML = '<div class="muted small">Loading reviews...</div>';
+  const resp = await postAPI('getReviews', { limit });
+  if(!resp || (resp.status !== 'ok' && resp.status !== 'success')){ container.innerHTML = '<div class="muted">Unable to load reviews.</div>'; return; }
+  const reviews = resp.reviews || resp.data || [];
   if(reviews.length === 0){ container.innerHTML = '<div class="muted">No reviews yet.</div>'; return; }
   container.innerHTML = '';
   reviews.forEach(r => {
     const card = document.createElement('div');
     card.className = 'card';
-    card.style.marginBottom = '10px';
-    card.innerHTML = `<strong>${escapeHtml(r.name)}</strong> <div class="small muted">${new Date(r.timestamp).toLocaleString()}</div><p>${escapeHtml(r.review)}</p>`;
+    card.style.marginBottom = '12px';
+    const name = escapeHtml(r.name || 'Anonymous');
+    const text = escapeHtml(r.review || r.text || '');
+    const ts = r.timestamp || r.date || '';
+    const pretty = ts ? (new Date(ts)).toLocaleString() : '';
+    card.innerHTML = `<strong>${name}</strong><div class="small muted">${pretty}</div><p>${text}</p>`;
     container.appendChild(card);
   });
 }
 
-// review form submit on reviews.html
 async function submitReviewForm(){
-  const name = document.getElementById('rev_name').value.trim();
-  const email = document.getElementById('rev_email').value.trim();
-  const phone = document.getElementById('rev_phone').value.trim();
-  const review = document.getElementById('rev_text').value.trim();
+  const name = (document.getElementById('rev_name')||{}).value.trim();
+  const email = (document.getElementById('rev_email')||{}).value.trim();
+  const phone = (document.getElementById('rev_phone')||{}).value.trim();
+  const review = (document.getElementById('rev_text')||{}).value.trim();
   const status = document.getElementById('rev_status');
-  if(!name || !email || !review){ status.innerText = 'Please fill name, email and review.'; return; }
-  status.innerText = 'Submitting...';
-  const res = await postAPI('review', { name:name, email:email, phone:phone, review:review });
-  if(res && res.status === 'ok'){
-    status.innerText = 'Thanks — review submitted!';
-    document.getElementById('rev_form').reset();
+  if(!name || !email || !review){ if(status) status.innerText = 'Please fill name, email and review.'; return; }
+  if(status) status.innerText = 'Submitting...';
+  const resp = await postAPI('review', { name, email, phone, review });
+  if(resp && (resp.status === 'ok' || resp.status === 'success')){
+    if(status) status.innerText = 'Thanks — review submitted!';
+    const form = document.getElementById('rev_form');
+    if(form) form.reset();
+    setTimeout(()=> loadReviews('reviewsList', 12), 400);
   } else {
-    status.innerText = 'Error: ' + (res.message || 'Could not submit');
+    if(status) status.innerText = '❌ ' + (resp.message || 'Could not submit review');
   }
 }
 
-// 📩 Contact form submission
-function contactUs() {
-  const name = document.getElementById("c_name").value.trim();
-  const email = document.getElementById("c_email").value.trim();
-  const msg = document.getElementById("c_msg").value.trim();
-  const status = document.getElementById("c_status");
-
-  if (!name || !email || !msg) {
-    status.innerText = "⚠️ Please fill all fields.";
-    return;
-  }
-
-  status.innerText = "⏳ Sending...";
-
-  fetch(API_URL, {
-    method: "POST",
-    body: JSON.stringify({
-      type: "contact",
-      data: { name, email, msg }
-    }),
-    headers: { "Content-Type": "application/json" }
-  })
-    .then(res => res.text())
-    .then(() => {
-      status.innerText = "✅ Message sent successfully!";
-      document.getElementById("contactForm").reset();
-    })
-    .catch(() => {
-      status.innerText = "❌ Something went wrong.";
-    });
-}
-
-
-// simple helper
+// escape helper
 function escapeHtml(str){
   if(!str) return '';
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-// 🌗 Dark Mode Toggle
-const toggleBtn = document.getElementById("darkModeToggle");
-if (toggleBtn) {
-  toggleBtn.addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode");
-    toggleBtn.textContent = document.body.classList.contains("dark-mode") ? "☀️" : "🌙";
-  });
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
